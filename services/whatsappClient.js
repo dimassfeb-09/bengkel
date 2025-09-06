@@ -1,5 +1,6 @@
 // services/whatsappClient.js
 const qrcode = require('qrcode-terminal');
+const path = require('path');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 
 let isReady = false;
@@ -7,7 +8,7 @@ let isReady = false;
 const client = new Client({
     authStrategy: new LocalAuth({
         clientId: 'main-session',
-        dataPath: path.join(__dirname, '../.wwebjs_auth') // fix folder di project
+        dataPath: path.join(__dirname, '../.wwebjs_auth') // folder penyimpanan session
     }),
     puppeteer: {
         headless: true,
@@ -21,13 +22,18 @@ client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true });
 });
 
-client.on('ready', () => {
-    isReady = true;
-    console.log('✅ WhatsApp Client siap digunakan!');
+client.on('loading_screen', (percent, message) => {
+    console.log(`⌛ Loading ${percent}% - ${message}`);
 });
 
 client.on('authenticated', () => {
     console.log('🔑 Authenticated, sesi tersimpan.');
+    isReady = true; // fallback supaya bisa langsung kirim pesan
+});
+
+client.on('ready', () => {
+    isReady = true;
+    console.log('✅ WhatsApp Client siap digunakan!');
 });
 
 client.on('auth_failure', (msg) => {
