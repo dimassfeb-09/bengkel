@@ -33,6 +33,11 @@ client.on('authenticated', () => {
     isReady = true; // fallback supaya bisa langsung kirim pesan
 });
 
+
+client.on('message', msg => {
+    console.log('📩 Pesan masuk:', msg.body);
+});
+
 client.on('ready', () => {
     isReady = true;
     console.log('✅ WhatsApp Client siap digunakan!');
