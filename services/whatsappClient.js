@@ -6,8 +6,8 @@ let isReady = false;
 
 const client = new Client({
     authStrategy: new LocalAuth({
-        clientId: 'main-session',          // ID bebas untuk multi-session
-        dataPath: './.wwebjs_auth'         // folder penyimpanan session
+        clientId: 'main-session',
+        dataPath: path.join(__dirname, '../.wwebjs_auth') // fix folder di project
     }),
     puppeteer: {
         headless: true,
