@@ -6,6 +6,8 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 let isReady = false;
 
 const client = new Client({
+    takeoverOnConflict: true,
+    takeoverTimeoutMs: 3000,
     authStrategy: new LocalAuth({
         clientId: 'main-session',
         dataPath: path.join(__dirname, '../.wwebjs_auth') // folder penyimpanan session
