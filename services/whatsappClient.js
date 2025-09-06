@@ -34,10 +34,6 @@ client.on('authenticated', () => {
 });
 
 
-client.on('message', msg => {
-    console.log('📩 Pesan masuk:', msg.body);
-});
-
 client.on('ready', () => {
     isReady = true;
     console.log('✅ WhatsApp Client siap digunakan!');
